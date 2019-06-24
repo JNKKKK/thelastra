@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>The Last RA</title>
+    <link rel="stylesheet" href="style.css" type="text/css" />
+    <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/pure-min.css"
+        integrity="sha384-nn4HPE8lTHyVtfCBi5yW9d20FjT8BJwUXyWZT9InLYax14RDjBj46LmSztkmNP9w" crossorigin="anonymous">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/jquery-csv/1.0.4/jquery.csv.min.js"></script>
+
+</head>
+
+<body>
+    <div id="container">
+        <div id="head-container">
+            <div class="pure-g">
+                <div class="pure-u-1-3">
+                    <div class="grid-padding">
+                        <img src="http://image.orimuse.com/products_thumbnail/d2557c8d-7de3-4061-bbe1-4c040d48a82f.png">
+                    </div>
+                </div>
+                <div class="pure-u-2-3">
+                    <div class="grid-padding">
+                        <h1>The Last RÄ</h1>
+                        <h1>最后的RÄ</h1>
+                        <h1>最后的膜蛤</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="table-container">
+            <table class="pure-table pure-table-striped">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>公司</th>
+                        <th>Proposal描述</th>
+                        <th>年月日</th>
+                        <th>cik</th>
+                        <th>链接</th>
+                        <th>txt</th>
+                    </tr>
+                </thead>
+                <tbody id="table-body">
+                </tbody>
+            </table>
+            <div id="loading-banner">
+                <h1>数据正在加载中 马上即可excited！</h1>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        function process_cik(cik) {
+            cik = parseInt(cik);
+            if (isNaN(cik)) cik = '';
+            return cik;
+        }
+        function getYear(date) {
+            return '20' + date.slice(-2);
+        }
+        function download(filename, text) {
+            var element = document.createElement('a');
+            element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+            element.setAttribute('download', filename);
+            element.style.display = 'none';
+            document.body.appendChild(element);
+            element.click();
+            document.body.removeChild(element);
+        }
+        $(document).ready(function () {
+            $.get("data.csv", function (data) {
+                $('#loading-banner').hide();
+                var data = $.csv.toArrays(data);
+                data.shift();
+                data.forEach(function (row, index) {
+                    tRow = $('<tr>');
+                    tRow.append($('<td>').text(index + 1)); //index
+                    tRow.append($('<td>').text(row[2])); //company
+                    tRow.append($('<td>').text(row[5])); //proposal discription
+                    tRow.append($('<td>').text(row[4])); //date
+                    tRow.append($('<td>').text(process_cik(row[8]))); //cik
+                    //url
+                    if (row[9])
+                        tRow.append($('<td>').width('2em').append($('<a>', { text: '连任', href: row[9] })))
+                    else
+                        tRow.append($('<td>').width('2em').text('下台'));
+                    //txt
+                    if (row[9])
+                        tRow.append($('<td>').width('2em').append($('<a>', { text: '吼哇', href: 'javascript:void(0)' }).click(function () {
+                            download('S_' + row[7] + '_' + getYear(row[4]) + '_' + row[6] + '(' + (index + 2).toString() + ')', '');
+                        })))
+                    else
+                        tRow.append($('<td>').width('2em').text('不吼'));
+                    $('#table-body').append(tRow);
+                });
+            });
+        });
+
+    </script>
+</body>
+
+</html>

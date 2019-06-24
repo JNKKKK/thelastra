@@ -1,0 +1,37 @@
+#container {
+    margin: 0 5em 0 5em;
+}
+
+#head-container {
+    width: 30em;
+    margin: 2em auto;
+    border: 3px solid #0a1e39;
+    border-radius: 5px;
+}
+
+#head-container h1 {
+    font-size: 200%;
+    color: #444;
+}
+
+#head-container img {
+    width: 100%;
+}
+
+.grid-padding {
+    padding: 0.5em;
+}
+
+#table-container {
+    width: 100%;
+    margin-bottom: 2em;
+}
+
+#table-container table {
+    width: 100%;
+}
+
+#loading-banner h1 {
+    color: #888;
+    text-align: center;
+}
