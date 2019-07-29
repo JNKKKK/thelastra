@@ -84,12 +84,12 @@
                     tRow.append($('<td>').text(process_cik(row[8]))); //cik
                     //url
                     if (row[9])
-                        tRow.append($('<td>').width('2em').append($('<a>', { text: '连任', href: 'https://www.sec.gov'+ row[9] })))
+                        tRow.append($('<td>').width('2em').append($('<a>', { text: '链接', href: 'https://www.sec.gov' + row[9], target: '_blank' })))
                     else
                         tRow.append($('<td>').width('2em').text('下台'));
                     //txt
                     if (row[9])
-                        tRow.append($('<td>').width('2em').append($('<a>', { text: '吼哇', href: 'javascript:void(0)' }).click(function () {
+                        tRow.append($('<td>').width('2em').append($('<a>', { text: 'txt', href: 'javascript:void(0)' }).click(function () {
                             download('S_' + row[7] + '_' + getYear(row[4]) + '_' + row[6] + '(' + (index + 2).toString() + ')', '');
                         })))
                     else
